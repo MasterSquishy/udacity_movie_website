@@ -9,12 +9,20 @@ main_page_head = '''
 <html lang="en">
 <head>
     <meta charset="utf-8">
+<<<<<<< HEAD
     <title>Movie Mayhem!</title>
 
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+=======
+    <title>Fresh Tomatoes!</title>
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="bootstrap.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+>>>>>>> 77f55fd32f997edad424c6aa19b1509672636072
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <style type="text/css" media="screen">
         body {
@@ -35,6 +43,7 @@ main_page_head = '''
             width: 100%;
             height: 100%;
         }
+<<<<<<< HEAD
 
         .movie-tile {
             position:relative;
@@ -87,6 +96,16 @@ main_page_head = '''
             border-radius:24px;
             }
     
+=======
+        .movie-tile {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        .movie-tile:hover {
+            background-color: #993D00;
+            cursor: pointer;
+        }
+>>>>>>> 77f55fd32f997edad424c6aa19b1509672636072
         .scale-media {
             padding-bottom: 56.25%;
             position: relative;
@@ -109,7 +128,11 @@ main_page_head = '''
             $("#trailer-video-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
+<<<<<<< HEAD
         $(document).on('click', '.tryme', function (event) {
+=======
+        $(document).on('click', '.movie-tile', function (event) {
+>>>>>>> 77f55fd32f997edad424c6aa19b1509672636072
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
@@ -151,7 +174,11 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
+<<<<<<< HEAD
             <a class="navbar-brand" href="#">Movie Mayhem Trailers</a>
+=======
+            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
+>>>>>>> 77f55fd32f997edad424c6aa19b1509672636072
           </div>
         </div>
       </div>
@@ -166,6 +193,7 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
+<<<<<<< HEAD
 <div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url({poster_image_url}); background-size:cover; height:400px; width:280px;" >
     <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
     <div id="overlay">
@@ -185,6 +213,11 @@ movie_tile_content = '''
        </div>
        </form>
     </div>
+=======
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+    <img src="{poster_image_url}" width="220" height="342">
+    <h2>{movie_title}</h2>
+>>>>>>> 77f55fd32f997edad424c6aa19b1509672636072
 </div>
 '''
 
@@ -205,12 +238,16 @@ def create_movie_tiles_content(movies):
         content += movie_tile_content.format(
             movie_title=movie.title,
             poster_image_url=movie.poster_image_url,
+<<<<<<< HEAD
             synopsis=movie.storyline,
             trailer_youtube_id=trailer_youtube_id,
             wallpaper=movie.wallpaper,
             stars=movie.starring,
             rating=movie.rating,
             year=movie.year
+=======
+            trailer_youtube_id=trailer_youtube_id
+>>>>>>> 77f55fd32f997edad424c6aa19b1509672636072
         )
     return content
 
