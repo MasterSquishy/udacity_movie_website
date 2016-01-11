@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Movie Mayhem!</title>
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 80px;
+        }
+        #trailer .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 9001;
+        }
+        #trailer-video {
+            width: 100%;
+            height: 100%;
+        }
+
+        .movie-tile {
+            position:relative;
+            box-shadow:inset 1px 1px 40px 0 rgba(0,0,0,.45);
+        }
+        .movie-tile:hover {
+            background-color: black;
+            cursor: pointer;
+        }
+        #overlay{
+            position:relative;
+            height:400px;
+            width:280px;
+            background:rgba(0,0,0,.75);
+            text-align:center;
+            opacity:0;
+            -webkit-transition: opacity .25s ease;
+            -moz-transition: opacity .25s ease;
+            margin-left: -15px;
+        }
+        .movie-tile:hover #overlay {
+            opacity:1;
+        }
+        #title {
+            font-family:Helvetica;
+            font-weight:900;
+            color:rgba(255,255,255,.85);
+            font-size:28px;
+            height: 25%;
+        }
+        #synopsis {
+            color:rgba(255,255,255,.85);
+            height: 150px;
+            text-align: center;
+            overflow:auto;
+            padding-left: 25px;
+            padding-right:25px;
+        }
+        .bold {font-weight:900;}
+
+        #buttons{
+            padding-top:20px;
+            font-family:Helvetica;
+            color:rgba(255,255,255,.85);
+            font-size:14px;
+            height:25%;
+        }
+
+        button {
+            border-radius:24px;
+            }
+    
+        .scale-media {
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+        .scale-media iframe {
+            border: none;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.tryme', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the movies when the page loads
+        $(document).ready(function () {
+          $('.movie-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Movie Mayhem Trailers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Toy Story (1995)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>G</div></br>
+            <div><span class="bold">Starring:</span>  </br>Tom Hanks, Tim Allen, Don Rickles</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>A story of a boy and his toys that come to life</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="vwyZH85NQC4" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://media2.fdncms.com/boiseweekly/imager/disney-announces-toy-story-4-for-2017/u/original/3345916/342369.jpg?dl=1" download="Toy Story-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://upload.wikimedia.org/wikipedia/id/b/b0/Avatar-Teaser-Poster.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Avatar (2009)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Sam Worthington, Zoe Saldana, Sigourney Weaver</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>A marine on an alien planet</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="uA8SG4Yea7s" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://www.hdwallpapers.in/walls/neytiri__jake_sully_avatar-wide.jpg?dl=1" download="Avatar-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://ia.media-imdb.com/images/M/MV5BMjUyNTA3MTAyM15BMl5BanBnXkFtZTgwOTEyMTkyMjE@._V1_SX214_AL_.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">The Maze Runner (2014)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Dylan O'Brien, Kaya Scodelario, Will Poulter</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>Stuck in a Maze with no memory of the past, everyday is a fight for your life</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="64-iSYVmMVY" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://images6.fanpop.com/image/photos/37600000/The-Maze-Runner-the-maze-runner-37604286-1920-1200.jpg?dl=1" download="The Maze Runner-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/b/bc/Interstellar_film_poster.jpg/220px-Interstellar_film_poster.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Interstellar (2014)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Matthew McConaughey, Anne Hathaway, Jessica Chastain</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>One man's travels through space and time on a quest to save humanity</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="0vxOhd4qlnA" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://www.hdwallpapers.in/download/matthew_mcconaughey_in_interstellar-1920x1200.jpg?dl=1" download="Interstellar-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Fifth_element_poster_%281997%29.jpg/220px-Fifth_element_poster_%281997%29.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">The Fifth Element (1997)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Bruce Willis, Milla Jovovich, Gary Oldman, Chris Tucker</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>Taxi driver saves the planet</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="VkX7dHjL-aY" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://megawallpapershd.com/wallpapers/l/1920x1200/84/gary_oldman_milla_jovovich_the_fifth_element_1920x1200_83775.jpg?dl=1" download="The Fifth Element-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://ia.media-imdb.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SY317_CR0,0,214,317_AL_.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">The Martian (2015)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Matt Damon, Jessica Chastain, Kristen Wiig</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>An astronaut's attempt to survive in a hostile martian climate</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="ej3ioOneTy8" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://www.hdwallpapersimages.com/wp-content/uploads/2015/09/The-Martian-Matt-Damon-As-Mark-Watney-Images-6310.jpg?dl=1" download="The Martian-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/The_Mask_%28film%29_poster.jpg/220px-The_Mask_%28film%29_poster.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">The Mask (1994)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Jim Carrey, Cameron Diaz, Peter Riegert</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>A magical mask changes a mans life forever</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="lcjN7zkgELM" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://images-cdn.moviepilot.com/images/c_limit,h_540,w_960/t_mp_quality/dqgbffrbobbj1jxjykye/5-day-recommendation-challenge-the-perfect-90-s-comedy-628414.jpg?dl=1" download="The Mask-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/4/47/Home_alone.jpg/220px-Home_alone.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Home Alone (1990)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG</div></br>
+            <div><span class="bold">Starring:</span>  </br>Macaulay Culkin, Joe Pesci, Daniel Stern</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>Clever kid  left at home proves that he can take care of himself</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="CK2Btk6Ybm0" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://cdn.mtlblog.com/uploads/2015/11/home-alone.jpg?dl=1" download="Home Alone-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://ia.media-imdb.com/images/M/MV5BMTYwNTM5NDkzNV5BMl5BanBnXkFtZTYwODQ4MzY5._V1_SY317_CR8,0,214,317_AL_.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Harry Potter (2001)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG</div></br>
+            <div><span class="bold">Starring:</span>  </br>Daniel Radcliffe, Rupert Grint, Richard Harris</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>An orphan and his magical life</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="PbdM1db3JbY" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://pcwallart.com/images/harry-potter-and-the-sorcerers-stone-logo-wallpaper-2.jpg?dl=1" download="Harry Potter-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://ia.media-imdb.com/images/M/MV5BMTQyNDc4OTA5OF5BMl5BanBnXkFtZTcwOTI1NzMyMQ@@._V1_SX214_AL_.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Blankman (1994)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Damon Wayans, David Alan Grier, Robin Givens</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>A simpleton inventor becomes a superhero with a bulletproof costume and a low budget</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="GSFaU4cN-qI" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="https://wallpaperscraft.com/image/blankman_1994_darryl_walker_damon_wayans_99871_3840x2400.jpg?dl=1" download="Blankman-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://ia.media-imdb.com/images/M/MV5BMjAyMzAyNzY5N15BMl5BanBnXkFtZTcwNjU3MTc0MQ@@._V1_SY317_CR5,0,214,317_AL_.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Rush Hour (1998)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>PG-13</div></br>
+            <div><span class="bold">Starring:</span>  </br>Jackie Chan, Chris Tucker, Ken Leung</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>Two cops team up to get back a kidnapped daughter</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="JMiFsFQcFLE" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://images7.alphacoders.com/336/336247.jpg?dl=1" download="Rush Hour-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" style="background-image:url(http://ia.media-imdb.com/images/M/MV5BMTU4NjE2MjgwN15BMl5BanBnXkFtZTcwMjEyMTMyMQ@@._V1_SY317_CR5,0,214,317_AL_.jpg); background-size:cover; height:400px; width:280px;" >
+    <!--MOVIE INFORMATION PANEL THAT DISPLAYS ON HOVER-->
+    <div id="overlay">
+       <div id="title">Leprechaun (1993)</div>
+       <!--SCROLLING MOVIE INFORMATION SECTION-->
+       <div id="synopsis">
+            <div><span class="bold">Rated:</span> </br>R</div></br>
+            <div><span class="bold">Starring:</span>  </br>Warwick Davis, Jennifer Aniston, Ken Olandt</div></br>
+            <div><span class="bold">Synopsis:</span>  </br>When a man goes for virtual vacation memories of the planet Mars, an unexpected and harrowing series of events forces him to go to the planet for real, or does he?</div>
+       </div>
+
+       <!--BUTTONS TO VIEW TRAILER AND DOWNLOAD WALLPAPER-->
+       <form>
+       <div id="buttons">
+            <a href="#"  class="tryme btn btn-warning btn-sm" data-trailer-youtube-id="0xD8AE8ZcpA" data-toggle="modal" data-target="#trailer">Watch Trailer</a></br>
+            <a href="http://image.tmdb.org/t/p/w1920/zYbm9EL6h6LtXCJwIcMskiRpiP7.jpg?dl=1" download="Leprechaun-wallpaper" class="btn btn-warning btn-sm">Download Wallpaper</a>
+       </div>
+       </form>
+    </div>
+</div>
+
+    </div>
+  </body>
+</html>
